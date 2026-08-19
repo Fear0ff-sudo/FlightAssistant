@@ -1,0 +1,6 @@
+print("Downloading...")
+shell.run("wget", "https://raw.githubusercontent.com/Fear0ff-sudo/FlightAssistant/refs/heads/v1/flightAssistant.lua", "flightAssistant.lua")
+shell.run("wget", "https://raw.githubusercontent.com/Fear0ff-sudo/FlightAssistant/refs/heads/v1/screenLib.lua", "screenLib.lua")
+shell.run("wget", "https://raw.githubusercontent.com/Fear0ff-sudo/FlightAssistant/refs/heads/v1/startup.lua", "startup.lua")
+shell.run("wget", "https://raw.githubusercontent.com/Fear0ff-sudo/FlightAssistant/refs/heads/v1/test.lua", "test.lua")
+print("Installed !")
