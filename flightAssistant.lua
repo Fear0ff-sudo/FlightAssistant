@@ -1,6 +1,6 @@
 local startup = require("startup")
-local test = require("test")
+local flightMode = require("flightMode")
 
 startup.startup()
 sleep(1)
-test.test()
+flightMode.flightMode()

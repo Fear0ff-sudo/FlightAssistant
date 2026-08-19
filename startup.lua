@@ -14,6 +14,24 @@ local function startupSound()
     speaker.playSound("entity.player.levelup", 1.0, 1.0)
 end
 
+local function startupAnimation()
+    local sizeX, sizeY = screen.getSize()
+    screen.setCursorPos(2, math.floor(sizeY / 2) + 1)
+    screenLib.loadingBarClean(screen, 20)
+    sleep(0.2)
+    screen.setCursorPos(2, math.floor(sizeY / 2) + 1)
+    screenLib.loadingBarClean(screen, 60)
+    sleep(0.2)
+    screen.setCursorPos(2, math.floor(sizeY / 2) + 1)
+    screenLib.loadingBarClean(screen, 100)
+    sleep(0.5)
+    screen.setCursorPos(1, math.floor((sizeY / 2) - 2))
+    screenLib.centerTextScreenX(screen, "Flight")
+    screen.setCursorPos(1, math.floor((sizeY / 2) - 1))
+    screenLib.centerTextScreenX(screen, "Assistant")
+    sleep(1)
+end
+
 local function startupDisplay()
     local sizeX, sizeY = screen.getSize()
     screen.setTextScale(0.5)
@@ -26,23 +44,12 @@ local function startupDisplay()
     screen.setBackgroundColor(colors.black)
     screen.clear()
 
-    screen.setCursorPos(2, math.floor(sizeY / 2) + 1)
-    screenLib.loadingBarClean(screen, 20)
-    sleep(0.2)
-    screen.setCursorPos(2, math.floor(sizeY / 2) + 1)
-    screenLib.loadingBarClean(screen, 60)
-    sleep(0.2)
-    screen.setCursorPos(2, math.floor(sizeY / 2) + 1)
-    screenLib.loadingBarClean(screen, 100)
-    sleep(0.5)
-    screen.setCursorPos(math.floor((sizeX - 6) / 2) + 1, math.floor((sizeY / 2) - 2))
-    screen.write("Flight")
-    screen.setCursorPos(math.floor((sizeX - 9) / 2) + 1, math.floor((sizeY / 2) - 1))
-    screen.write("Assistant")
+    parallel.waitForAll(startupAnimation, startupSound)
+    screen.setTextScale(0.5)
 end
 
 function api.startup()
-    parallel.waitForAll(startupDisplay, startupSound)
+    startupDisplay()
 end
 
 return api
