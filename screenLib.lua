@@ -54,4 +54,26 @@ function api.centerTextScreenY(screen, text)
     screen.write(text)
 end
 
+function api.getNextDisplayPos(screen, nDisplayed)
+    local sizeX, sizeY = screen.getSize()
+    if sizeX > 15 then
+        local y = math.floor(nDisplayed / 3) + 1
+        local x = (math.floor(sizeX / 3) * (nDisplayed % 3)) + 1
+        screen.setCursorPos(x, y)
+    else
+        local y = nDisplayed + 1
+        local x = 1
+        screen.setCursorPos(x, y)
+    end
+end
+
+function api.getNextDisplayPosSmall(screen, nDisplayed)
+    local sizeX, sizeY = screen.getSize()
+    local y = math.floor(nDisplayed / 2) + 1
+    local x = (math.floor(sizeX / 2) * (nDisplayed % 2)) + 1
+    screen.setCursorPos(x, y)
+end
+
+--api.getNextDisplayPos(peripheral.find("monitor"), 0)
+
 return api

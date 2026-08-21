@@ -3,6 +3,7 @@ local flightMode = require("flightMode")
 local combatMode = require("combatMode")
 local link = peripheral.find("redstone_link_bridge")
 local params = require("params")
+local checkForPeripherics = require("checkForPeripherics")
 
 function waitForChange()
     local change = 0
@@ -23,7 +24,7 @@ function changeMode()
     end
 end
 
-
+checkForPeripherics.checkForPeripherics()
 startup.startup()
 sleep(1)
 mode = "flight"
