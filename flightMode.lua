@@ -91,54 +91,73 @@ function api.flightMode()
             nDisplayed = nDisplayed + 1
         end
 
-
-        screenLib.getNextDisplayPos(screen, nDisplayed)
-        screen.setTextColor(colors.lightGray)
-        screen.write("ECO:")
-        screen.setTextColor(colors.white)
-        screen.write(math.floor(((tonumber((string.gsub(target.getLine(5), ",", "")))) / 60 )) .. "mn")
-        nDisplayed = nDisplayed + 1
-
-        screenLib.getNextDisplayPos(screen, nDisplayed)
-        screen.setTextColor(colors.green)
-        screen.write("X:")
-        screen.setTextColor(colors.white)
-        if x ~= nil then
-            screen.write(math.ceil(x))
-        else
-            screen.write("NS")
+        -- Autonomy
+        if isEngineWireless == true then
+            screenLib.getNextDisplayPos(screen, nDisplayed)
+            screen.setTextColor(colors.orange)
+            screen.write("AUT:")
+            screen.setTextColor(colors.white)
+            screen.write(math.floor(((tonumber((string.gsub(target.getLine(params.engine), ",", "")))) / 60 )) .. "mn")
+            nDisplayed = nDisplayed + 1
         end
-        nDisplayed = nDisplayed + 1
 
-        screenLib.getNextDisplayPos(screen, nDisplayed)
-        screen.setTextColor(colors.green)
-        screen.write("Y:")
-        screen.setTextColor(colors.white)
-        if x ~= nil then
-            screen.write(math.ceil(y))
-        else
-            screen.write("NS")
+        -- GPS
+        if isModem == true then
+            screenLib.getNextDisplayPos(screen, nDisplayed)
+            screen.setTextColor(colors.green)
+            screen.write("X:")
+            screen.setTextColor(colors.white)
+            if x ~= nil then
+                screen.write(math.ceil(x))
+            else
+                screen.write("NS")
+            end
+            nDisplayed = nDisplayed + 1
+
+            screenLib.getNextDisplayPos(screen, nDisplayed)
+            screen.setTextColor(colors.green)
+            screen.write("Y:")
+            screen.setTextColor(colors.white)
+            if x ~= nil then
+                screen.write(math.ceil(y))
+            else
+                screen.write("NS")
+            end
+            nDisplayed = nDisplayed + 1
+
+            screenLib.getNextDisplayPos(screen, nDisplayed)
+            screen.setTextColor(colors.green)
+            screen.write("Z:")
+            screen.setTextColor(colors.white)
+            if x ~= nil then
+                screen.write(math.ceil(z))
+            else
+                screen.write("NS")
+            end
+            nDisplayed = nDisplayed + 1
         end
-        nDisplayed = nDisplayed + 1
 
-        screenLib.getNextDisplayPos(screen, nDisplayed)
-        screen.setTextColor(colors.green)
-        screen.write("Z:")
-        screen.setTextColor(colors.white)
-        if x ~= nil then
-            screen.write(math.ceil(z))
-        else
-            screen.write("NS")
+        -- Gimbal sensor
+        if isGimbal then
+            screenLib.getNextDisplayPos(screen, nDisplayed)
+            screen.setTextColor(colors.blue)
+            screen.write("ANG:")
+            screen.setTextColor(colors.white)
+            local angs = params.gimbal.getAngles()
+            local angX = angs[1]
+            local angZ = angs[2]
+            screen.write(math.floor((tonumber(angX) * 100) + 0.5) / 100 .. " " .. math.floor((tonumber(angZ) * 100) + 0.5) / 100)
+            nDisplayed = nDisplayed + 1
+        elseif isGimbalWireless then
+            screenLib.getNextDisplayPos(screen, nDisplayed)
+            screen.setTextColor(colors.blue)
+            screen.write("ANG:")
+            screen.setTextColor(colors.white)
+            screen.write(string.gsub(target.getLine(params.gimbalX), " ", "") .. " " .. string.gsub(target.getLine(params.gimbalZ), " ", ""))
+            nDisplayed = nDisplayed + 1
         end
-        nDisplayed = nDisplayed + 1
 
-        screenLib.getNextDisplayPos(screen, nDisplayed)
-        screen.setTextColor(colors.blue)
-        screen.write("ANG:")
-        screen.setTextColor(colors.white)
-        screen.write(string.gsub(target.getLine(6), " ", "") .. " " .. string.gsub(target.getLine(7), " ", ""))
-        nDisplayed = nDisplayed + 1
-
+        -- Flight Mode Text
         if sizeX > 15 then
             screen.setCursorPos(sizeX - 10, sizeY)
             screen.setTextColor(colors.white)

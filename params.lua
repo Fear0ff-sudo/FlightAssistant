@@ -59,9 +59,9 @@ if target == nil then
 else
     api.altimeter = 1 -- put a display link on the altimeter in "Height" mode
     api.pressuremeter = 3 -- put a second display link on the altimeter in "pressure" mode (Need both altitudemeter and pressuremeter to work)
---    api.gimbalX = 6 -- put a display link on the gimbal in "X Angle" mode
---    api.gimbalZ = 7 -- put a second display link on the gimbal in "Z Angle" mode
---    api.engine = 5 -- put a display link on the engine in "total burn time" mode
+    api.gimbalX = 6 -- put a display link on the gimbal in "X Angle" mode
+    api.gimbalZ = 7 -- put a second display link on the gimbal in "Z Angle" mode
+    api.engine = 5 -- put a display link on the engine in "total burn time" mode
     api.energy = 4 -- put a display link on the Threshold Switch connected to the fuel container
     api.velocity = 2 -- put a display link on the Velocity sensort connected to the fuel container
 end

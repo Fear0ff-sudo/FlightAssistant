@@ -28,15 +28,17 @@ function api.checkForPeripherics()
         isLinkBridge = true
     end
 
-    local modem = peripheral.find("modem")
+    local modem = peripheral.find("modem", function(nomDuPeripherique, objetModem)
+        return objetModem.isWireless()
+    end)
     if modem == nil then
         isModem = false
         term.setTextColor(colors.orange)
-        print("No Modem detected...")
+        print("No Wireless Modem detected...")
         term.setTextColor(colors.white)
     else
         term.setTextColor(colors.green)
-        print("Modem detected !")
+        print("Wireless Modem detected !")
         term.setTextColor(colors.white)
         isModem = true
     end
@@ -105,7 +107,7 @@ function api.checkForPeripherics()
 
     local gimbal = peripheral.find("gimbal_sensor")
     if gimbal == nil then
-        if (params.gimbalX == nil) and (params.gimbalY == nil) then
+        if (params.gimbalX == nil) or (params.gimbalZ == nil) then
             isGimbal = false
             isGimbalWireless = false
             term.setTextColor(colors.orange)
@@ -179,6 +181,17 @@ function api.checkForPeripherics()
         isEnergyWireless = true
     end
     
+    if params.engine == nil then
+        isEngineWireless = false
+        term.setTextColor(colors.orange)
+        print("No Engine sensor detected...")
+        term.setTextColor(colors.white)
+    else
+        term.setTextColor(colors.blue)
+        print("Engine sensor detected !")
+        term.setTextColor(colors.white)
+        isEngineWireless = true
+    end
 
     if (isScreen == false) then 
         print()
